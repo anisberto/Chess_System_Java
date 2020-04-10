@@ -1,4 +1,4 @@
-package gui;
+package UI;
 
 import chess.ChessPiece;
 
