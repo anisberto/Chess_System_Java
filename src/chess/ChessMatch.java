@@ -40,7 +40,9 @@ public class ChessMatch {
 
 	private void validateSourcePosition(Position position) {
 		if (!board.thereIsAPiece(position))
-			throw new ChessException("Erro position: Não existe peça nesta posição! " + position);
+			throw new ChessException("Erro position: Não existe peça nesta posição! ( " + position + " ).");
+		if (!board.piece(position).isThereAnyPossibleMove())
+			throw new ChessException("Erro 404: Não existe movimento possível para a peca! ");
 	}
 
 	private Piece makeMove(Position source, Position target) {
