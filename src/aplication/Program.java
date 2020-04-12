@@ -19,7 +19,7 @@ public class Program {
 		while (true) {
 			try {
 				UserInterface.clearScreen();
-				UserInterface.printBoard(chessMatch.getPieces());
+				UserInterface.printMatch(chessMatch);
 				System.out.println();
 
 				// Posição de Origem

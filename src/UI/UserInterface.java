@@ -3,6 +3,7 @@ package UI;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
+import chess.ChessMatch;
 import chess.ChessPiece;
 import chess.ChessPosition;
 import chess.Color;
@@ -48,6 +49,15 @@ public class UserInterface {
 		System.out.flush();
 	}
 
+	public static void printMatch(ChessMatch chessMatch) {
+		System.out.println();
+		printBoard(chessMatch.getPieces());
+		System.out.println();
+		System.out.println("Turn: " + chessMatch.getTurn());
+		System.out.println("Aguardando jogador: " + chessMatch.getCurrentPlayer());
+
+	}
+
 	public static void printBoard(ChessPiece[][] pieces) {
 		for (int i = 0; i < pieces.length; i++) {
 			System.out.print("|" + (8 - i) + "| ");
@@ -73,15 +83,15 @@ public class UserInterface {
 	// Metodo para imprimir uma unica peça do tabuleiro
 	private static void printPiece(ChessPiece piece, boolean background) {
 		if (background)
-			System.out.print(ANSI_BLUE_BACKGROUND);
+			System.out.print(ANSI_RED_BACKGROUND);
 
 		if (piece == null) {
-			System.out.print("-" + ANSI_RESET);
+			System.out.print("*" + ANSI_RESET);
 		} else {
 			if (piece.getColor() == Color.WHITE) {
 				System.out.print(ANSI_WHITE + piece + ANSI_RESET);
 			} else {
-				System.out.print(ANSI_YELLOW + piece + ANSI_RESET);
+				System.out.print(ANSI_BLACK + piece + ANSI_RESET);
 			}
 		}
 		System.out.print(" ");
