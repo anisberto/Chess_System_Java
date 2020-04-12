@@ -23,11 +23,15 @@ public class Program {
 				System.out.println();
 
 				// Posição de Origem
-				System.out.print("Source Peça a ser Movida: ");
+				System.out.print("Source - Peca a ser Movida: ");
 				ChessPosition source = UserInterface.readchessPosition(input);
 				System.out.println();
 
-				System.out.print("Target Destino da Peça: ");
+				boolean[][] possibleMoves = chessMatch.possibleMovesMarkup(source);
+				UserInterface.clearScreen();
+				UserInterface.printBoard(chessMatch.getPieces(), possibleMoves);
+
+				System.out.print("Target - Destino da Peca: ");
 				ChessPosition target = UserInterface.readchessPosition(input);
 
 				ChessPiece capturedPiece = chessMatch.performeChessMove(source, target);

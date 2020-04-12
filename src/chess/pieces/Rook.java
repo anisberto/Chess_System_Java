@@ -24,7 +24,9 @@ public class Rook extends ChessPiece {
 
 		/// Marcar posições Superiores a Peça atual
 		auxPosition.setValuePositions(position.getRow() - 1, position.getColumn());
+		
 		while (getBoard().positionExists(auxPosition) && !getBoard().thereIsAPiece(auxPosition)) {
+			
 			possibleMatMove[auxPosition.getRow()][auxPosition.getColumn()] = true;
 			auxPosition.setRow(auxPosition.getRow() - 1);
 		}
