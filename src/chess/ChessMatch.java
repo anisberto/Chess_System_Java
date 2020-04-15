@@ -2,6 +2,8 @@ package chess;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
 import boardgame.Board;
 import boardgame.Piece;
@@ -14,6 +16,7 @@ public class ChessMatch {
 	private Board board;
 	private int turn;
 	private Color currentPlayer;
+	private boolean check;
 
 	private List<Piece> piecesOnTheBoard = new ArrayList();
 	private List<Piece> capturedPieces = new ArrayList();
@@ -99,9 +102,37 @@ public class ChessMatch {
 		return capturedPiece;
 	}
 
+	private void undoMove(Position source, Position target, Piece capturedPiece) {
+		Piece removedPieceUndo = board.removePiece(target);
+		board.placePiece(removedPieceUndo, source);
+
+		// voltar peça para o tabuleiro
+		if (capturedPiece != null) {
+			board.placePiece(capturedPiece, target);
+			capturedPieces.remove(capturedPiece);
+			piecesOnTheBoard.add(capturedPiece);
+		}
+	}
+
 	private void nextTurn() {
 		turn++;
 		currentPlayer = (currentPlayer == Color.WHITE) ? Color.BLACK : Color.WHITE;
+	}
+
+	private Color opponentPiece(Color color) {
+		return (color == color.WHITE) ? color.BLACK : color.WHITE;
+	}
+
+	private ChessPiece king(Color color) {
+		List<Piece> listChessPiece = piecesOnTheBoard.stream().filter(x -> ((ChessPiece) x).getColor() == color)
+				.collect(Collectors.toList());
+
+		for (Piece pieceOnTheList : listChessPiece) {
+			if (pieceOnTheList instanceof King) {
+				return (ChessPiece) pieceOnTheList;
+			}
+		}
+		throw new IllegalStateException("O Rei da cor " + color + " Não foi encontrado! ");
 	}
 
 	private void placeNewPiece(char column, int row, ChessPiece piece) {
