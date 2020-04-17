@@ -60,6 +60,10 @@ public class UserInterface {
 		System.out.println();
 		System.out.println("Turn: " + chessMatch.getTurn());
 
+		if (chessMatch.getCheck()) {
+			System.out.println(ANSI_RED + "Check! " + ANSI_RESET);
+		}
+
 		if (chessMatch.getCurrentPlayer() == Color.BLACK)
 			System.out.println("Aguardando jogador: " + ANSI_BLACK + chessMatch.getCurrentPlayer() + ANSI_RESET);
 		if (chessMatch.getCurrentPlayer() == Color.WHITE)

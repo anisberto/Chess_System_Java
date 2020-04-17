@@ -58,6 +58,7 @@ public class Program {
 				System.out.println(erroBoard.getMessage());
 				input.nextLine();
 			}
+
 		}
 	}
 }
