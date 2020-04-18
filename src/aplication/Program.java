@@ -61,5 +61,6 @@ public class Program {
 		}
 		UserInterface.clearScreen();
 		UserInterface.printMatch(chessMatch, captured);
+		
 	}
 }
