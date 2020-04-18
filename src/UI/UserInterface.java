@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Scanner;
 import java.util.stream.Collectors;
 
+import boardgame.Board;
 import chess.ChessMatch;
 import chess.ChessPiece;
 import chess.ChessPosition;
