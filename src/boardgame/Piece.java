@@ -23,7 +23,7 @@ public abstract class Piece {
 		boolean[][] anyPositionTrue = possibleMoves();
 		
 		for (int i = 0; i < anyPositionTrue.length; i++) {
-			for (int j = 0; j < anyPositionTrue[i].length; j++) {
+			for (int j = 0; j < anyPositionTrue.length; j++) {
 				if (anyPositionTrue[i][j]) {
 					return true;
 				}
