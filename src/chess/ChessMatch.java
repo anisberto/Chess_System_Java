@@ -128,7 +128,7 @@ public class ChessMatch {
 
 		if (!replacedType.equals("B") && !replacedType.equals("N") && !replacedType.equals("Q")
 				&& !replacedType.equals("R"))
-			throw new InvalidParameterException("Tipo invalido para promocao! ");
+			return promoted;
 
 		Position positionPromotedPiece = promoted.getChessPiece().toPosition();
 		Piece pieceRemovedAfterPromoted = board.removePiece(positionPromotedPiece);
