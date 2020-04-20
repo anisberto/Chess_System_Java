@@ -1,5 +1,6 @@
 package chess;
 
+import java.security.InvalidParameterException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -22,6 +23,7 @@ public class ChessMatch {
 	private boolean check;
 	private boolean checkMate;
 	private ChessPiece enPassantVulnerable;
+	private ChessPiece promoted;
 
 	private List<Piece> piecesOnTheBoard = new ArrayList();
 	private List<Piece> capturedPieces = new ArrayList();
@@ -47,6 +49,10 @@ public class ChessMatch {
 
 	public boolean checkMate() {
 		return checkMate;
+	}
+
+	public ChessPiece getPromoted() {
+		return promoted;
 	}
 
 	public ChessPiece getEnPassantVulnerable() {
@@ -86,6 +92,16 @@ public class ChessMatch {
 
 		ChessPiece movedPiece = (ChessPiece) board.piece(target);
 
+		// # Especial move promotion
+		promoted = null;
+		if (movedPiece instanceof Pawn) {
+			if ((movedPiece.getColor() == Color.WHITE && target.getRow() == 0)
+					|| (movedPiece.getColor() == Color.BLACK && target.getRow() == 7)) {
+				promoted = (ChessPiece) board.piece(target);
+				promoted = replacePromotedPiece("Q");
+			}
+		}
+
 		check = (testCheck(opponentPiece(currentPlayer))) ? true : false;
 
 		if (testCheckMate(opponentPiece(currentPlayer))) {
@@ -104,6 +120,45 @@ public class ChessMatch {
 		}
 
 		return (ChessPiece) capturedPiece;
+	}
+
+	public ChessPiece replacePromotedPiece(String replacedType) {
+		if (promoted == null)
+			throw new IllegalStateException("Nao ha peca para ser promovida ");
+
+		if (!replacedType.equals("B") && !replacedType.equals("N") && !replacedType.equals("Q")
+				&& !replacedType.equals("R"))
+			throw new InvalidParameterException("Tipo invalido para promocao! ");
+
+		Position positionPromotedPiece = promoted.getChessPiece().toPosition();
+		Piece pieceRemovedAfterPromoted = board.removePiece(positionPromotedPiece);
+		piecesOnTheBoard.remove(pieceRemovedAfterPromoted);
+
+		ChessPiece newPiece = newPiece(replacedType, promoted.getColor());
+		board.placePiece(newPiece, positionPromotedPiece);
+		piecesOnTheBoard.add(newPiece);
+
+		return newPiece;
+	}
+
+	private ChessPiece newPiece(String type, Color color) {
+		ChessPiece chessPiece;
+
+		switch (type) {
+		case "B":
+			chessPiece = new Bishop(board, color);
+			break;
+		case "N":
+			chessPiece = new Knight(board, color);
+			break;
+		case "Q":
+			chessPiece = new Queen(board, color);
+			break;
+		default:
+			chessPiece = new Rook(board, color);
+			break;
+		}
+		return chessPiece;
 	}
 
 	private void validateSourcePosition(Position position) {
