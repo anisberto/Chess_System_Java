@@ -15,10 +15,10 @@ import exceptions.ChessException;
 
 public class Program {
 
-	public static void main(String[] args) {
-		Scanner input = new Scanner(System.in);
-		ChessMatch chessMatch = new ChessMatch();
-		List<ChessPiece> captured = new ArrayList();
+	public static void main(final String[] args) {
+		final Scanner input = new Scanner(System.in);
+		final ChessMatch chessMatch = new ChessMatch();
+		final List<ChessPiece> captured = new ArrayList();
 
 		while (!chessMatch.checkMate()) {
 			try {
@@ -27,15 +27,15 @@ public class Program {
 				UserInterface.printMatch(chessMatch, captured);
 				System.out.println();
 
-				// Posição de Origem
+				// Posiï¿½ï¿½o de Origem
 				System.out.print(UserInterface.ANSI_RED);
 				System.out.print("Source - Peca a ser Movida: ");
 				System.out.print(UserInterface.ANSI_RESET);
 
-				ChessPosition source = UserInterface.readchessPosition(input);
+				final ChessPosition source = UserInterface.readchessPosition(input);
 				System.out.println();
 
-				boolean[][] possibleMoves = chessMatch.possibleMovesMarkup(source);
+				final boolean[][] possibleMoves = chessMatch.possibleMovesMarkup(source);
 				UserInterface.clearScreen();
 				UserInterface.printBoard(chessMatch.getPieces(), possibleMoves);
 
@@ -43,9 +43,9 @@ public class Program {
 				System.out.print("Target - Destino da Peca: ");
 				System.out.print(UserInterface.ANSI_RESET);
 
-				ChessPosition target = UserInterface.readchessPosition(input);
+				final ChessPosition target = UserInterface.readchessPosition(input);
 
-				ChessPiece capturedPiece = chessMatch.performeChessMove(source, target);
+				final ChessPiece capturedPiece = chessMatch.performeChessMove(source, target);
 				if (capturedPiece != null)
 					captured.add(capturedPiece);
 
@@ -59,17 +59,17 @@ public class Program {
 						System.out.print("Invalid Value! Enter piece for promotion ( B / N / R / Q ): ");
 						typePromotedPiece = input.nextLine().toUpperCase();
 					}
-					
+
 					chessMatch.replacePromotedPiece(typePromotedPiece);
 				}
 
-			} catch (ChessException erroChess) {
+			} catch (final ChessException erroChess) {
 				System.out.println(erroChess.getMessage());
 				input.nextLine();
-			} catch (InputMismatchException erroInput) {
+			} catch (final InputMismatchException erroInput) {
 				System.out.println(erroInput.getMessage());
 				input.nextLine();
-			} catch (BoardException erroBoard) {
+			} catch (final BoardException erroBoard) {
 				System.out.println(erroBoard.getMessage());
 				input.nextLine();
 			}
